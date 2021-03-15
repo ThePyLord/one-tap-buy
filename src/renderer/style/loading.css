@@ -1,0 +1,33 @@
+.loading-shell {
+    width: 56vw;
+    height: 35px;
+    margin: auto;
+    background-color: white;
+    border-radius: 8px;
+}
+
+#loading-bar {
+    margin-top: 60px;
+    background-color: #4deec6;
+    color: white;
+    width: 00.0%;
+    height: 35px;
+    border-radius: 6px;
+}
+
+.center {
+    padding-top: 210px;
+    text-align: center;
+    font-size: 34px;
+    color: aliceblue;
+}
+
+#loading-screen {
+    background-color: #293241;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background: #293241;
+}

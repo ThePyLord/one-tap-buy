@@ -2,17 +2,32 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>One Tap Buy</title>
+    <title>One Tap Buy</title> 
     <!-- <link rel="stylesheet" href="./proto-css/main.css"> -->
     <link rel="stylesheet" href="./style/index.css">
+    <link rel="stylesheet" href="./style/loading.css">
   </head>
-  <input type="text" placeholder="Place SKU/Web Code here:" id="text-box">
-  <button type="submit" class="btn btn-primary" id='add-sku-btn'>Submit</button>
+<body>
   
-  <div id="cards">
-    
-  </div>
+  <br>
+  <section id='loading-screen'>
+    <h1 class="center" id='loading-percent'>Gathering Product Data</h1>
+    <div class="loading-shell" id='shell-loading'>
+      <div id="loading-bar"></div>
+    </div>
+  </section>
+
+  <section id='main'>
+    <input type="text" placeholder="Place SKU/Web Code here:" id="text-box">
+    <button type="submit" class="btn btn-primary" id='add-sku-btn'>Submit</button>
+    <br>
+    <br>
+    <div id="cards"> </div>
+  </section>
+
+  <br>
   <script src='./js/renderer.js' type="module"></script>
   <script src="./js/btnHandlers.js" type="module"></script>
+  <script src="./js/loadingScreen.js"></script>
   </body>
 </html>

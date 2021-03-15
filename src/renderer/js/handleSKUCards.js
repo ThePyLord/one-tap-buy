@@ -3,13 +3,12 @@
 
     let sku, stock, img, remaining, prodName;
     let cardBody = document.createElement('div')
-    cardBody.classList = "card-dark auto";
+    cardBody.classList = "card auto";
     
     // Product name
     prodName = document.createElement('h1')
     prodName.classList = 'product-name'
     prodName.innerText = cardData.name;
-	console.log(cardData)
     // sku
     sku = document.createElement("h4")
     sku.classList = 'small-header sku'
@@ -50,4 +49,13 @@ export function checkSKU(sku) {
 		passed = true;
 		return passed;
 	}
+}
+
+function shortenLenghth (name) {
+    let shortName = name
+			.split(' ')
+			.slice(0, 4)
+			.toString()
+			.replace(/,/g, ' ');
+    return shortName;
 }

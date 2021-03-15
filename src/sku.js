@@ -1,60 +1,71 @@
-const { ipcMain } = require('electron');
+const { ipcMain, } = require('electron');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const fs =  require('fs');
 
-ipcMain.on("get-skus-list", (event, args) => {
-	let skus = args;
 
-	skus.forEach(sku => {
+module.exports =  function (mainWindow) {
+
+	ipcMain.on("get-skus-list", (event, args) => {
+		let skus = args[0];
+
+		loadingFinishedIPC = true;
+			skus.forEach(sku => {
+
+				let returnData = {
+					name: "",
+					item: undefined
+				}
+				
+				
+				scrapeProd(sku).then(item => {
+					returnData.item = item;
+					findProdName(item.productURL).then(name => {
+						returnData.name = name.split(' ').slice(0, 4).toString().replace(/,/g, ' ');
+						
+						mainWindow.webContents.send('received-data', [returnData])
+					})
+				}).catch(err => console.log(`e -> ${err}`));
+			})
+	
+	});
+	
+	
+	// Get SKU info
+	ipcMain.on("get-sku-data", (event, args) => {
+		let sku = args;
 		let returnData = {
 			name: "",
+			shortName: "",
 			item: undefined
 		}
-
+	
 		scrapeProd(sku).then(item => {
 			returnData.item = item;
+	
 			findProdName(item.productURL).then(name => {
-				returnData.name = name.split(' ').slice(0, 4).toString().replace(/,/g, ' ');
-				event.reply('received-data', [returnData])
+				returnData.name = name;
+				let shortName = name
+				.split(' ')
+				.slice(0, 4)
+				.toString()
+				.replace(/,/g, ' ');
+				returnData.shortName = shortName;
+				console.log("sending back another sku's info line - 52")
+				mainWindow.webContents.send('received-data', [returnData])
+				//event.reply('received-data', [returnData])
+				
+			}).catch(err => {
+				// console.log("44 -");
+				console.log(err)
 			})
-		}).catch(err => console.log(`e -> ${err}`));
-	})
-
-});
-
-
-// Get SKU info
-ipcMain.on("get-sku-data", (event, args) => {
-	let sku = args;
-	let returnData = {
-		name: "",
-		shortName: "",
-		item: undefined
-	}
-
-	scrapeProd(sku).then(item => {
-		returnData.item = item;
-
-		findProdName(item.productURL).then(name => {
-			returnData.name = name;
-			let shortName = name
-			.split(' ')
-			.slice(0, 4)
-			.toString()
-			.replace(/,/g, ' ');
-			returnData.shortName = shortName;
-			event.reply('received-data', [returnData])
-
 		}).catch(err => {
-			// console.log("44 -");
+			// console.log("48")
 			console.log(err)
 		})
-	}).catch(err => {
-		// console.log("48")
-		console.log(err)
-	})
-});
+	});
+}
+
 
 
 
