@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <title>One Tap Buy</title>
     <!-- <link rel="stylesheet" href="./proto-css/main.css"> -->
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="./style/index.css">
   </head>
   <input type="text" placeholder="Place SKU/Web Code here:" id="text-box">
-  <button type="submit" class="btn btn-primary" onclick='addSKU()'>Submit</button>
+  <button type="submit" class="btn btn-primary" id='add-sku-btn'>Submit</button>
   
   <div id="cards">
     
   </div>
-  <script src='./renderer.js'></script>
+  <script src='./js/renderer.js' type="module"></script>
+  <script src="./js/btnHandlers.js" type="module"></script>
   </body>
 </html>

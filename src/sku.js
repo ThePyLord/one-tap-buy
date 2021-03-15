@@ -44,8 +44,6 @@ ipcMain.on("get-sku-data", (event, args) => {
 			.toString()
 			.replace(/,/g, ' ');
 			returnData.shortName = shortName;
-			console.log(returnData.shortName)
-			// console.log(re)
 			event.reply('received-data', [returnData])
 
 		}).catch(err => {

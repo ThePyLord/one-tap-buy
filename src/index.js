@@ -23,7 +23,7 @@ const createWindow = () => {
 	});
 
 	// and load the index.html of the app.
-	mainWindow.loadFile(path.join(__dirname, 'index.html'));
+	mainWindow.loadFile(path.join(__dirname, '/renderer/index.html'));
 	// show window
 	mainWindow.on("ready-to-show", (e) => mainWindow.show());
 
