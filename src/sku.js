@@ -3,39 +3,24 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const fs =  require('fs');
 
-ipcMain.on("test", (event, args) => {
+ipcMain.on("get-skus-list", (event, args) => {
 	let skus = args;
-	let scrapePromises = [];
-
 
 	skus.forEach(sku => {
-		scrapePromises.push(scrapeProd(sku))
-	})
-
-
-	Promise.all(scrapePromises).then(p => {
-
 		let returnData = {
 			name: "",
 			item: undefined
 		}
 
-		returnData.item = p;
+		scrapeProd(sku).then(item => {
+			returnData.item = item;
+			findProdName(item.productURL).then(name => {
+				returnData.name = name.split(' ').slice(0, 4).toString().replace(/,/g, ' ');
+				event.reply('received-data', [returnData])
+			})
+		}).catch(err => console.log(`e -> ${err}`));
+	})
 
-		findProdName(p.productURL).then(name => {
-			returnData.name = name;
-			let shortName = name.split(' ').slice(0, 4).toString().replace(/,/g, ' ');
-			returnData.shortName = shortName;
-			// event.reply("received-data", )
-
-		}).catch(err => console.log(err));
-		//event.reply("received-data", data);
-
-		
-        
-    }).catch(errs => {
-        console.log(errs)
-    })
 });
 
 

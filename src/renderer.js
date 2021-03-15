@@ -9,7 +9,7 @@ function initData() {
     initConfig()
     
     
-   // ipcRenderer.send('test', config.skus)
+   ipcRenderer.send('get-skus-list', config.skus)
 }
 
 initData()
@@ -93,7 +93,7 @@ function createProductCard(cardData, masterContainer) {
     // Product name
     prodName = document.createElement('h1')
     prodName.classList = 'product-name'
-    prodName.innerText = cardData.shortName
+    prodName.innerText = cardData.name;
 	console.log(cardData)
     // sku
     sku = document.createElement("h4")
@@ -136,4 +136,4 @@ function clearSkus () {
     localStorage.setItem("skus", JSON.stringify(arr))
 }
 
-clearSkus()
+//clearSkus()
